@@ -1,47 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
 :root {
-    --bg: #f4f7fb;
-    --card: #ffffff;
-    --text: #1a1f2b;
-    --text-soft: #6b7280;
-    --border: #eef1f6;
-    --accent: #2fb673;
-    --accent-dark: #229a5f;
-    --debt: #ff8a3d;
-    --debt-bg: #fff4ea;
-    --paid: #22c08a;
-    --paid-bg: #e8faf3;
-    --radius-lg: 28px;
-    --radius-md: 18px;
-    --radius-sm: 12px;
-    --shadow-soft: 0 4px 14px rgba(20, 30, 60, .05);
-    --shadow-hover: 0 14px 30px rgba(20, 30, 60, .12);
+    --bg: #eef1e4;
+    --grid-line: rgba(38, 53, 38, .05);
+    --card: #fbfaf4;
+    --text: #263526;
+    --text-soft: #6e7b62;
+    --border: #ddd9c3;
+    --accent: #3f7d5c;
+    --accent-dark: #2f6147;
+    --debt: #a15a34;
+    --debt-bg: #f5e8dc;
+    --paid: #3f7d5c;
+    --paid-bg: #e3efe1;
+    --brass: #b08d57;
+    --radius-lg: 20px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --shadow-soft: 0 3px 10px rgba(38, 53, 38, .08);
+    --shadow-hover: 0 10px 22px rgba(38, 53, 38, .16);
     --ease: cubic-bezier(.22, 1, .36, 1);
 }
- 
+
 @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
+    from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
 }
- 
+
 @keyframes popIn {
-    from { opacity: 0; transform: scale(.92); }
+    from { opacity: 0; transform: scale(.94); }
     to   { opacity: 1; transform: scale(1); }
 }
- 
-@keyframes shimmer {
-    0%   { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-}
- 
+
 * {
     box-sizing: border-box;
 }
- 
+
 body {
-    font-family: 'Inter', 'Manrope', Arial, sans-serif;
+    font-family: 'Work Sans', Arial, sans-serif;
     background:
-        radial-gradient(circle at 15% 0%, rgba(47,182,115,.07), transparent 45%),
-        radial-gradient(circle at 100% 100%, rgba(34,192,138,.05), transparent 40%),
+        repeating-linear-gradient(0deg, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent 26px),
+        repeating-linear-gradient(90deg, var(--grid-line) 0, var(--grid-line) 1px, transparent 1px, transparent 26px),
         var(--bg);
     background-attachment: fixed;
     margin: 0;
@@ -49,45 +48,82 @@ body {
     color: var(--text);
     -webkit-font-smoothing: antialiased;
 }
- 
-/* Карточка */
+
+/* Карточка — разворот конторской книги */
 #content,
 .container {
     max-width: 800px;
     margin: auto;
     background: var(--card);
     border-radius: var(--radius-lg);
-    padding: 32px;
+    padding: 34px 32px;
     box-shadow: var(--shadow-soft);
     border: 1px solid var(--border);
+    position: relative;
     animation: fadeUp .5s var(--ease) both;
 }
- 
+
+/* Перфорация сверху, как у отрывного бланка */
+#content::before,
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 24px;
+    right: 24px;
+    height: 1px;
+    background-image: linear-gradient(90deg, var(--border) 55%, transparent 45%);
+    background-size: 10px 1px;
+    background-repeat: repeat-x;
+}
+
 /* Заголовок */
 #title,
 h1 {
     text-align: center;
-    font-size: 32px;
-    font-weight: 800;
-    letter-spacing: -.02em;
-    margin-bottom: 28px;
-    background: linear-gradient(90deg, var(--text), var(--accent-dark));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 34px;
+    letter-spacing: -.01em;
+    color: var(--text);
+    margin: 4px 0 6px;
 }
- 
-/* Сетка участков */
+
+#title::before,
+h1::before {
+    content: "РЕЕСТР УЧАСТКОВ";
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: .22em;
+    color: var(--brass);
+    margin-bottom: 10px;
+}
+
+#title + *,
+h1 + * {
+    margin-top: 0;
+}
+
+#plots {
+    margin-top: 30px !important;
+}
+
+/* Сетка участков — таблички на колышках */
 #plots {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
-    gap: 12px;
+    gap: 18px 12px;
+    padding-top: 6px;
 }
- 
+
 #plots > * {
-    animation: popIn .35s var(--ease) both;
+    animation: popIn .3s var(--ease) both;
 }
- 
+
 #plots > *:nth-child(1) { animation-delay: .02s; }
 #plots > *:nth-child(2) { animation-delay: .04s; }
 #plots > *:nth-child(3) { animation-delay: .06s; }
@@ -97,166 +133,211 @@ h1 {
 #plots > *:nth-child(7) { animation-delay: .14s; }
 #plots > *:nth-child(8) { animation-delay: .16s; }
 #plots > *:nth-child(n+9) { animation-delay: .18s; }
- 
+
 /* Кнопки */
 button,
 .plot-btn {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 14px;
-    font-size: 18px;
+    border-radius: var(--radius-sm) var(--radius-sm) 4px 4px;
+    padding: 14px 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
     font-weight: 600;
     color: var(--text);
     cursor: pointer;
-    transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
     position: relative;
-    overflow: hidden;
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
 }
- 
-button::after,
-.plot-btn::after {
+
+/* "Колышек" под табличкой участка */
+#plots > button::after,
+#plots > .plot-btn::after {
     content: "";
     position: absolute;
-    inset: 0;
-    background: radial-gradient(circle, rgba(47,182,115,.18) 0%, transparent 70%);
-    opacity: 0;
-    transform: scale(.6);
-    transition: opacity .35s var(--ease), transform .35s var(--ease);
+    left: 50%;
+    bottom: -8px;
+    width: 2px;
+    height: 8px;
+    background: var(--brass);
+    opacity: .55;
+    transform: translateX(-50%);
+    transition: height .2s var(--ease), opacity .2s var(--ease);
 }
- 
+
 button:hover,
 .plot-btn:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-hover);
-    border-color: rgba(47,182,115,.35);
+    border-color: var(--accent);
+    background: #ffffff;
 }
- 
-button:hover::after,
-.plot-btn:hover::after {
-    opacity: 1;
-    transform: scale(1);
+
+#plots > button:hover::after,
+#plots > .plot-btn:hover::after {
+    height: 12px;
+    opacity: .85;
 }
- 
+
 button:active,
 .plot-btn:active {
     transform: translateY(-1px) scale(.98);
     transition-duration: .1s;
 }
- 
+
 .menu {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px;
 }
- 
+
 .menu button {
     width: 280px;
+    border-radius: var(--radius-sm);
+    font-family: 'Work Sans', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: left;
+    padding: 14px 20px;
 }
- 
+
+.menu button::after {
+    display: none;
+}
+
 /* Подзаголовки */
 h2 {
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -.01em;
-    margin-bottom: 20px;
-}
- 
-h3 {
-    font-size: 20px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 24px;
     font-weight: 600;
-    padding-bottom: 6px;
-    margin-top: 25px;
-    border-bottom: none;
+    letter-spacing: -.005em;
+    margin-bottom: 18px;
+    color: var(--text);
 }
- 
-/* Строки долгов */
+
+h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    padding-bottom: 8px;
+    margin-top: 26px;
+    border-bottom: 1px dashed var(--border);
+}
+
+/* Строки долгов — линованная бумага */
 .debt-row,
 .payment-line {
-    background: #f8fafc;
-    border-radius: var(--radius-sm);
-    padding: 12px 16px;
-    margin-bottom: 8px;
-    border: 1px solid transparent;
-    transition: transform .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
-    animation: fadeUp .4s var(--ease) both;
+    background: transparent;
+    border-radius: 0;
+    padding: 11px 4px 11px 18px;
+    margin-bottom: 0;
+    border: none;
+    border-bottom: 1px dashed var(--border);
+    position: relative;
+    transition: background .2s var(--ease), padding-left .2s var(--ease);
+    animation: fadeUp .35s var(--ease) both;
 }
- 
+
+.debt-row::before,
+.payment-line::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 50% 50% 50% 0;
+    background: var(--accent);
+    transform: translateY(-50%) rotate(45deg);
+}
+
 .debt-row:hover,
 .payment-line:hover {
-    transform: translateX(4px);
-    background: #ffffff;
-    border-color: var(--border);
+    background: var(--grid-line);
+    padding-left: 22px;
 }
- 
-/* Общий долг */
+
+/* Общий долг — чернильный штамп */
 .total-debt {
     background: var(--debt-bg);
-    padding: 18px 20px;
+    padding: 16px 20px;
     border-radius: var(--radius-md);
-    font-size: 24px;
-    font-weight: 800;
-    color: #b45309;
-    margin-top: 15px;
-    box-shadow: var(--shadow-soft);
-    animation: fadeUp .45s var(--ease) both;
+    border: 1.5px solid var(--debt);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--debt);
+    margin-top: 16px;
+    letter-spacing: -.01em;
+    animation: fadeUp .4s var(--ease) both;
 }
- 
+
 /* Оплачено */
 .total-paid {
     background: var(--paid-bg);
-    padding: 18px 20px;
+    padding: 16px 20px;
     border-radius: var(--radius-md);
-    font-size: 24px;
-    font-weight: 800;
-    color: #0f8a5f;
-    margin-top: 15px;
-    box-shadow: var(--shadow-soft);
-    animation: fadeUp .45s var(--ease) both;
+    border: 1.5px solid var(--paid);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--accent-dark);
+    margin-top: 16px;
+    letter-spacing: -.01em;
+    animation: fadeUp .4s var(--ease) both;
 }
- 
+
 /* Назад */
 .back-btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    margin-top: 20px;
-    padding: 14px 22px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-    color: white;
+    margin-top: 22px;
+    padding: 13px 22px;
+    background: var(--text);
+    color: var(--card);
     text-decoration: none;
     border-radius: var(--radius-sm);
-    font-weight: 700;
-    box-shadow: 0 8px 20px rgba(47,182,115,.28);
-    transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: .02em;
+    box-shadow: var(--shadow-soft);
+    transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease);
 }
- 
+
 .back-btn::before {
     content: "←";
-    transition: transform .25s var(--ease);
+    transition: transform .2s var(--ease);
 }
- 
+
 .back-btn:hover {
+    background: var(--accent-dark);
     transform: translateY(-2px);
-    box-shadow: 0 12px 26px rgba(47,182,115,.38);
+    box-shadow: var(--shadow-hover);
 }
- 
+
 .back-btn:hover::before {
     transform: translateX(-4px);
 }
- 
+
 .back-btn:active {
     transform: translateY(0) scale(.97);
 }
- 
+
 .section-line {
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
-    margin: 16px 0;
+    background-image: linear-gradient(90deg, var(--border) 55%, transparent 45%);
+    background-size: 10px 1px;
+    background-repeat: repeat-x;
+    margin: 18px 0;
     border: none;
 }
- 
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
