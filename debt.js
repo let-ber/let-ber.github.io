@@ -10,6 +10,11 @@ Promise.all([
 .then(([debtsData, chargesData, paymentsData]) => {
 
     const plot = debtsData[plotId];
+    if (plot && plot.owner && plot.owner.toLowerCase().includes("итого")) {
+    document.getElementById("content").innerHTML =
+        "<h2>Такого участка не существует</h2>";
+    return;
+}
     const charges = chargesData[plotId] || [];
     const payments = paymentsData[plotId] || [];
     const reportTitle = debtsData._title || "";

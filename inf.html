@@ -158,16 +158,21 @@
   }
 
   .map-base,
-  .map-roads{
+  .map-roads-grey,
+  .map-roads-highlight{
     pointer-events:none;
   }
 
-  .map-roads{
+  .map-roads-grey{
+    opacity:.85;
+  }
+
+  .map-roads-highlight{
     opacity:0;
     transition:opacity .2s ease;
   }
 
-  .map-roads.active{
+  .map-roads-highlight.active{
     opacity:1;
   }
 
@@ -312,9 +317,18 @@
         />
 
         <image
-          id="roadsImage"
-          class="map-roads"
-          href="map-roads.png"
+          id="roadsImageGrey"
+          class="map-roads-grey"
+          href="map-roads-grey.png"
+          x="0" y="0"
+          width="1557" height="3151"
+          preserveAspectRatio="none"
+        />
+
+        <image
+          id="roadsImageHighlight"
+          class="map-roads-highlight"
+          href="map-roads-highlight.png"
           x="0" y="0"
           width="1557" height="3151"
           preserveAspectRatio="none"
@@ -466,11 +480,11 @@ function hideTooltip(){
    ЗИМНИЕ ДОРОГИ
    ========================== */
 const roadsToggle = document.getElementById("roadsToggle");
-const roadsImage = document.getElementById("roadsImage");
+const roadsImageHighlight = document.getElementById("roadsImageHighlight");
 const roadsLegend = document.getElementById("roadsLegend");
 
 roadsToggle.addEventListener("change", () => {
-  roadsImage.classList.toggle("active", roadsToggle.checked);
+  roadsImageHighlight.classList.toggle("active", roadsToggle.checked);
   roadsLegend.classList.toggle("visible", roadsToggle.checked);
 });
 
